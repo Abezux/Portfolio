@@ -3,8 +3,8 @@ tailwind.config = {
     theme: {
         extend: {
             colors: {
-                'neon-pink': '#ff0080',
-                'neon-purple': '#8b5cf6',
+                'neon-cyan': '#00ffff',
+                'neon-blue': '#0099ff',
                 'dark-bg': '#0f0f0f'
             }
         }
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
     initSmoothScrolling();
     initScrollAnimations();
-    initTypingEffect();
+    // initTypingEffect(); // Disabled to preserve neon effect
     initParallaxEffect();
     initProjectsCarousel();
 });
@@ -147,13 +147,32 @@ function initScrollAnimations() {
 function initTypingEffect() {
     const heroTitle = document.querySelector('#home h1');
     if (heroTitle) {
-        const text = heroTitle.textContent;
+        // Store the original HTML content with the gradient-text span
+        const originalHTML = heroTitle.innerHTML;
+        const textContent = heroTitle.textContent;
+        
+        // Clear only the text content, preserving the HTML structure
         heroTitle.innerHTML = '';
         
         let i = 0;
         const typeWriter = () => {
-            if (i < text.length) {
-                heroTitle.innerHTML += text.charAt(i);
+            if (i < textContent.length) {
+                // Reconstruct the HTML with the gradient-text span for "Product Designer"
+                const currentText = textContent.substring(0, i + 1);
+                const productDesignerIndex = currentText.indexOf('Product Designer');
+                
+                if (productDesignerIndex !== -1 && i >= productDesignerIndex) {
+                    // We're typing the "Product Designer" part
+                    const beforeProductDesigner = textContent.substring(0, productDesignerIndex);
+                    const productDesignerPart = currentText.substring(productDesignerIndex);
+                    
+                    heroTitle.innerHTML = beforeProductDesigner + 
+                        '<span class="gradient-text">' + productDesignerPart + '</span>';
+                } else {
+                    // We're typing the regular text
+                    heroTitle.innerHTML = currentText;
+                }
+                
                 i++;
                 setTimeout(typeWriter, 50);
             }
