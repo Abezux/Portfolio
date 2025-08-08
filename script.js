@@ -184,11 +184,6 @@ function initTypingEffect() {
 }
 
 // Parallax Effect for Background Elements (Disabled to fix scroll issues)
-function initParallaxEffect() {
-    // Parallax effect disabled to prevent content separation issues
-    // This was causing service cards and project cards to move independently
-    console.log('Parallax effect disabled for better user experience');
-}
 
 // Form Validation (if contact form is added later)
 function validateForm(form) {
