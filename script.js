@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // initTypingEffect(); // Disabled to preserve neon effect
     initParallaxEffect();
     initProjectsCarousel();
+    initTechSliderAccessibility();
 });
 
 // Mobile Menu Functionality
@@ -319,6 +320,21 @@ function resetTransforms() {
     const cards = document.querySelectorAll('.service-card, .project-card');
     cards.forEach(card => {
         card.style.transform = 'none';
+    });
+}
+
+// Tech Slider: pause on focus for accessibility
+function initTechSliderAccessibility() {
+    const slider = document.querySelector('.tech-slider');
+    const track = document.querySelector('.tech-slide-track');
+    if (!slider || !track) return;
+    slider.setAttribute('role', 'region');
+    slider.setAttribute('aria-label', 'Technology icons slideshow');
+    slider.addEventListener('focusin', () => {
+        track.style.animationPlayState = 'paused';
+    });
+    slider.addEventListener('focusout', () => {
+        track.style.animationPlayState = 'running';
     });
 }
 
